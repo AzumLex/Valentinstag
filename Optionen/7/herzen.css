@@ -1,0 +1,17 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+canvas {
+    position: absolute; /* Ändere die Position auf absolut */
+    top: 0;
+    left: 0;
+    z-index: 0; /* Stelle sicher, dass das Canvas unter den anderen Elementen liegt */
+}

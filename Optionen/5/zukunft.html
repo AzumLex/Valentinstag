@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regeln und wichtige Informationen</title>
+    <script>
+        // Funktion zum Laden der JSON-Datei
+        async function loadInfos() {
+            try {
+                const response = await fetch('infos.json');
+                const data = await response.json();
+                console.log('Geladene Daten:', data);
+                // Hier können Sie die Daten weiter verarbeiten
+            } catch (error) {
+                console.error('Fehler beim Laden der JSON-Datei:', error);
+            }
+        }
+
+        // Funktion zum Aktualisieren der JSON-Datei
+        async function updateInfos(newInfo) {
+            try {
+                // JSON-Datei laden
+                const response = await fetch('infos.json');
+                let data = await response.json();
+                // Daten aktualisieren
+                data.push(newInfo);
+                // Daten in JSON-Datei schreiben
+                const updatedResponse = await fetch('infos.json', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                console.log('Daten aktualisiert:', updatedResponse);
+            } catch (error) {
+                console.error('Fehler beim Aktualisieren der JSON-Datei:', error);
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Regeln und wichtige Informationen</h1>
+    <!-- Hier können Sie ein Formular oder andere Elemente für die Interaktion hinzufügen -->
+    <script>
+        // Beispielhafte Verwendung der Funktionen
+        loadInfos(); // Laden der JSON-Datei beim Seitenaufruf
+        // updateInfos({ title: 'Neue Information', content: 'Lorem ipsum dolor sit amet.' }); // Beispiel für das Aktualisieren der JSON-Datei
+    </script>
+</body>
+</html>

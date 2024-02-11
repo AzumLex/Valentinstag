@@ -1,0 +1,58 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    width: 40%;
+    max-width: 600px;
+    padding: 20px;
+    margin: 0;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative; /* Positionierung für die Herzen */
+    z-index: 1; /* Stellt sicher, dass die Herzen hinter dem Inhalt liegen */
+}
+
+h1 {
+    color: #ff4d4d;
+}
+
+.options {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.options li {
+    margin-bottom: 20px;
+}
+
+.options li a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff6b6b;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.options li a:hover {
+    background-color: #ff4d4d;
+}
+
+canvas {
+    position: absolute; /* Ändere die Position auf absolut */
+    top: 0;
+    left: 0;
+    z-index: 0; /* Stelle sicher, dass das Canvas unter den anderen Elementen liegt */
+}
