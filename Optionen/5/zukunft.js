@@ -1,6 +1,6 @@
 // Funktion zum Abrufen und Anzeigen der Regeln aus der JSON-Datei
 async function displayRules() {
-    const response = await fetch('path/to/your/json/file.json');
+    const response = await fetch('https://api.github.com/azumlex.github.io/Valentinstag/Optionen/5/statuten.json');
     const data = await response.json();
     const rulesList = document.getElementById('rulesList');
     rulesList.innerHTML = ""; // Clear previous content
