@@ -1,0 +1,17 @@
+{
+    "regeln": [
+      {
+        "titel": "Regel 1",
+        "text": "Dies ist der Text für Regel 1."
+      },
+      {
+        "titel": "Regel 2",
+        "text": "Dies ist der Text für Regel 2."
+      },
+      {
+        "titel": "Regel 3",
+        "text": "Dies ist der Text für Regel 3."
+      }
+    ]
+  }
+  
