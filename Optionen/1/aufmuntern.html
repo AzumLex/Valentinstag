@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zufälliges Video abspielen</title>
+    <style>
+        /* Füge hier das CSS ein */
+        #playButton {
+            background-color: #ff4d4d; /* Grün */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 12px;
+        }
+
+        #backknopf{
+            background-color: #ff4d4d; /* Grün */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 12px;
+        }
+
+        .video-container {
+            margin-top: 20px;
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 */
+            overflow: hidden;
+        }
+
+        #videoPlayer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #videoPlayer:focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <button id="playButton">Video abspielen</button>
+    <button id="backknopf" a href="https://azumlex.github.io/Valentinstag/main-seite.html">Zurück zu den Herzen</button>
+
+    <div class="video-container">
+        <video id="videoPlayer" controls autoplay>
+            <source id="videoSource" src="" type="video/mp4">
+        </video>
+    </div>
+
+    <script>
+        // Füge hier das JavaScript ein
+        document.getElementById('playButton').addEventListener('click', function() {
+            var videoFolder = 'Memes/'; // Passe den Pfad entsprechend an
+            var videoFiles = ['1.mp4', '2.mp4', '3.mp4', '4.mp4', '5.mp4', '6.mp4', '7.mp4', '8.mp4']; // Liste der Videodateien
+
+            var randomIndex = Math.floor(Math.random() * videoFiles.length); // Zufällige Auswahl eines Index
+            var randomVideo = videoFolder + videoFiles[randomIndex]; // Pfad zum zufällig ausgewählten Video
+
+            var videoPlayer = document.getElementById('videoPlayer');
+            var videoSource = document.getElementById('videoSource');
+
+            videoSource.src = randomVideo; // Setze die Quelle des Videos
+            videoPlayer.load(); // Lade das Video
+            videoPlayer.play(); // Starte das Video
+
+            // Eventlistener um den Button erneut zu drücken, wenn das Video endet
+            videoPlayer.addEventListener('ended', function() {
+                this.load(); // Lade das Video erneut
+                this.play(); // Starte das Video erneut
+            }, false);
+
+            // Zeige das Video-Element an
+            videoPlayer.style.display = 'block';
+        });
+    </script>
+</body>
+</html>
