@@ -1,0 +1,681 @@
+/* ===== RESET & BASE ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow: hidden;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+}
+
+.level {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.level.active {
+    display: flex;
+}
+
+/* =========================================================
+   LEVEL 1 – Romantischer Einstieg
+   ========================================================= */
+#level1 {
+    background: linear-gradient(135deg, #fce4ec, #f8bbd0, #f48fb1);
+    flex-direction: column;
+}
+
+#heart-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.floating-heart {
+    position: absolute;
+    font-size: 40px;
+    cursor: pointer;
+    user-select: none;
+    animation: floatUp linear;
+    transition: transform 0.1s;
+    z-index: 1;
+}
+
+.floating-heart:hover {
+    transform: scale(1.3);
+}
+
+.floating-heart.caught {
+    animation: heartCaught 0.4s ease-out forwards !important;
+    pointer-events: none;
+}
+
+@keyframes floatUp {
+    0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(-110vh) rotate(360deg); opacity: 0.6; }
+}
+
+@keyframes heartCaught {
+    0%   { transform: scale(1); opacity: 1; }
+    50%  { transform: scale(2); opacity: 0.8; }
+    100% { transform: scale(0); opacity: 0; }
+}
+
+.hud {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    color: #880e4f;
+    pointer-events: none;
+}
+
+#heart-counter {
+    font-size: 3rem;
+    font-weight: bold;
+    text-shadow: 0 2px 15px rgba(255, 255, 255, 0.9);
+}
+
+.instruction {
+    font-size: 1.2rem;
+    margin-top: 10px;
+    opacity: 0.85;
+    text-shadow: 0 1px 8px rgba(255, 255, 255, 0.7);
+}
+
+/* =========================================================
+   WHITE FADE (Übergangs-Overlay)
+   ========================================================= */
+#white-fade {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: opacity 1.5s ease;
+}
+
+#white-fade.active {
+    opacity: 1;
+}
+
+/* =========================================================
+   LEVEL 4 – Hava Nagila Wahnsinn
+   ========================================================= */
+#level4 {
+    background: #111;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#level4.disco {
+    animation: discoBackground 0.3s infinite;
+}
+
+#level4.shake {
+    animation: discoBackground 0.3s infinite, screenShake 0.08s infinite;
+}
+
+@keyframes discoBackground {
+    0%   { background-color: #ff0066; }
+    14%  { background-color: #ffcc00; }
+    28%  { background-color: #00ff66; }
+    42%  { background-color: #0066ff; }
+    57%  { background-color: #cc00ff; }
+    71%  { background-color: #ff6600; }
+    85%  { background-color: #00ffcc; }
+    100% { background-color: #ff0066; }
+}
+
+@keyframes screenShake {
+    0%   { transform: translate(0, 0) rotate(0deg); }
+    20%  { transform: translate(-6px, 4px) rotate(-0.5deg); }
+    40%  { transform: translate(6px, -4px) rotate(0.5deg); }
+    60%  { transform: translate(-4px, -6px) rotate(-0.3deg); }
+    80%  { transform: translate(4px, 6px) rotate(0.3deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+#chaos-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.chaos-overlay {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    pointer-events: none;
+}
+
+.chaos-emoji {
+    position: absolute;
+    font-size: 50px;
+    user-select: none;
+    pointer-events: none;
+}
+
+.chaos-emoji.fly-right {
+    animation: flyRight linear forwards;
+}
+
+.chaos-emoji.fly-left {
+    animation: flyLeft linear forwards;
+}
+
+.chaos-emoji.fly-diagonal {
+    animation: flyDiagonal linear forwards;
+}
+
+@keyframes flyRight {
+    from { transform: translateX(-100px) rotate(0deg); }
+    to   { transform: translateX(110vw) rotate(720deg); }
+}
+
+@keyframes flyLeft {
+    from { transform: translateX(110vw) rotate(0deg); }
+    to   { transform: translateX(-100px) rotate(-720deg); }
+}
+
+@keyframes flyDiagonal {
+    from { transform: translate(-100px, -100px) rotate(0deg) scale(0.5); }
+    to   { transform: translate(110vw, 110vh) rotate(1080deg) scale(2); }
+}
+
+#party-text {
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: white;
+    text-transform: uppercase;
+    text-shadow:
+        0 0 20px #ff0,
+        0 0 40px #f0f,
+        0 0 60px #0ff,
+        0 0 80px #f00;
+    animation: blinkText 0.25s infinite, pulseScale 0.5s infinite;
+}
+
+#system-text {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #ff0;
+    margin-top: 20px;
+    animation: blinkText 0.4s infinite;
+}
+
+#chaos-counter {
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: white;
+    margin-top: 15px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+@keyframes blinkText {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.1; }
+}
+
+@keyframes pulseScale {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.15); }
+}
+
+/* =========================================================
+   BLUESCREEN
+   ========================================================= */
+#bluescreen {
+    background: #0078d7;
+    flex-direction: column;
+    color: white;
+    padding: 8% 10%;
+}
+
+.bsod-content {
+    max-width: 800px;
+}
+
+.bsod-sad {
+    font-size: 8rem;
+    margin-bottom: 20px;
+    line-height: 1;
+}
+
+.bsod-content h1 {
+    font-size: 2rem;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+}
+
+.bsod-content p {
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+    line-height: 1.5;
+}
+
+.bsod-small {
+    font-size: 1rem;
+    opacity: 0.8;
+    margin-top: 20px;
+}
+
+.bsod-qr {
+    font-size: 5rem;
+    margin-top: 30px;
+}
+
+/* =========================================================
+   LEVEL 2 – Turbo-Herzen
+   ========================================================= */
+#level2 {
+    background: linear-gradient(135deg, #4a0072, #7b1fa2, #ce93d8);
+    flex-direction: column;
+}
+
+#turbo-heart-container {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    overflow: hidden;
+}
+
+.turbo-heart {
+    position: absolute;
+    cursor: pointer;
+    user-select: none;
+    animation: floatUp linear;
+    transition: transform 0.1s;
+    z-index: 1;
+}
+
+.turbo-heart:hover {
+    transform: scale(1.3);
+}
+
+.turbo-heart.caught {
+    animation: heartCaught 0.4s ease-out forwards !important;
+    pointer-events: none;
+}
+
+.turbo-heart.broken {
+    filter: grayscale(0.3);
+}
+
+.turbo-heart.broken.caught {
+    animation: heartBroken 0.4s ease-out forwards !important;
+}
+
+@keyframes heartBroken {
+    0%   { transform: scale(1); opacity: 1; }
+    30%  { transform: scale(1.5) rotate(15deg); opacity: 0.8; color: red; }
+    100% { transform: scale(0) rotate(-30deg); opacity: 0; }
+}
+
+.level-label {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-shadow: 0 2px 15px rgba(255,255,255,0.7);
+    animation: pulseLabel 1.5s ease infinite;
+}
+
+@keyframes pulseLabel {
+    0%, 100% { opacity: 0.8; }
+    50%      { opacity: 1; }
+}
+
+.total-hearts {
+    font-size: 0.95rem;
+    margin-top: 6px;
+    opacity: 0.75;
+}
+
+/* =========================================================
+   LEVEL 3 – Goldene Herzen
+   ========================================================= */
+#level3 {
+    background: linear-gradient(135deg, #1a237e, #283593, #3949ab);
+    flex-direction: column;
+}
+
+#gold-heart-container {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    overflow: hidden;
+}
+
+.hud-gold {
+    color: #ffd54f !important;
+}
+
+.hud-gold .instruction {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.gold-heart {
+    position: absolute;
+    cursor: pointer;
+    user-select: none;
+    z-index: 1;
+    transition: transform 0.1s;
+}
+
+.gold-heart:hover {
+    transform: scale(1.3);
+}
+
+.gold-heart.caught {
+    animation: heartCaught 0.4s ease-out forwards !important;
+    pointer-events: none;
+}
+
+.gold-heart.golden {
+    filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.8));
+}
+
+.gold-heart.golden.caught {
+    animation: goldenCaught 0.5s ease-out forwards !important;
+}
+
+@keyframes goldenCaught {
+    0%   { transform: scale(1); opacity: 1; }
+    40%  { transform: scale(2.5); opacity: 0.9; }
+    100% { transform: scale(0); opacity: 0; }
+}
+
+@keyframes floatWavy {
+    0%   { transform: translateY(0) translateX(0) rotate(0deg); opacity: 1; }
+    25%  { transform: translateY(-27vh) translateX(30px) rotate(90deg); }
+    50%  { transform: translateY(-55vh) translateX(-30px) rotate(180deg); }
+    75%  { transform: translateY(-82vh) translateX(25px) rotate(270deg); }
+    100% { transform: translateY(-110vh) translateX(0) rotate(360deg); opacity: 0.6; }
+}
+
+/* Punkte-Popup beim Fangen */
+.point-popup {
+    position: absolute;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #ffd54f;
+    pointer-events: none;
+    animation: pointFloat 0.8s ease-out forwards;
+    z-index: 20;
+    text-shadow: 0 0 8px rgba(255,215,0,0.6);
+}
+
+@keyframes pointFloat {
+    0%   { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-60px); opacity: 0; }
+}
+
+/* =========================================================
+   TOTAL BADGE (Level 5 – Finale)
+   ========================================================= */
+.total-badge {
+    font-size: 1.6rem;
+    font-weight: bold;
+    margin-bottom: 25px;
+    padding: 12px 30px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+    display: inline-block;
+    animation: fadeInDown 1.5s ease;
+}
+
+/* =========================================================
+   LEVEL 5 – Das Herzstück
+   ========================================================= */
+#level5 {
+    background: linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    flex-direction: column;
+    color: white;
+    overflow-y: auto;
+}
+
+/* Sanfte Partikel im Hintergrund */
+#level5::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(2px 2px at 20% 30%, rgba(255,255,255,0.3), transparent),
+        radial-gradient(2px 2px at 40% 70%, rgba(255,255,255,0.2), transparent),
+        radial-gradient(2px 2px at 60% 20%, rgba(255,255,255,0.3), transparent),
+        radial-gradient(2px 2px at 80% 60%, rgba(255,255,255,0.2), transparent),
+        radial-gradient(2px 2px at 10% 80%, rgba(255,255,255,0.15), transparent),
+        radial-gradient(2px 2px at 90% 40%, rgba(255,255,255,0.15), transparent);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.final-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 40px 20px 100px;
+    max-width: 700px;
+    width: 90%;
+}
+
+.photo-frame {
+    width: 280px;
+    height: 280px;
+    margin: 0 auto 40px;
+    border: 3px solid rgba(255, 255, 255, 0.25);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow:
+        0 0 30px rgba(255, 255, 255, 0.08),
+        0 0 60px rgba(244, 143, 177, 0.15);
+    animation: fadeInDown 1.5s ease;
+}
+
+.photo-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#typewriter-text {
+    font-size: 1.25rem;
+    line-height: 1.9;
+    min-height: 100px;
+    margin-bottom: 30px;
+    color: rgba(255, 255, 255, 0.9);
+    font-style: italic;
+    word-break: break-word;
+}
+
+#typewriter-text .tw-char {
+    opacity: 0;
+    transition: opacity 0.05s ease;
+}
+
+#typewriter-text .tw-char.visible {
+    opacity: 1;
+}
+
+#typewriter-text .tw-word {
+    white-space: nowrap;
+    display: inline;
+}
+
+#typewriter-text .tw-char.tw-cursor::after {
+    content: '';
+    display: inline-block;
+    width: 2px;
+    height: 1.25em;
+    background: white;
+    vertical-align: text-bottom;
+    animation: cursorBlink 0.7s infinite;
+}
+
+@keyframes cursorBlink {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0; }
+}
+
+/* Liebesbrief / Gutschein */
+.hidden {
+    display: none;
+}
+
+.letter-box {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 18px;
+    padding: 35px 30px;
+    margin-top: 20px;
+    animation: fadeInUp 1.2s ease;
+}
+
+.letter-box h2 {
+    font-size: 1.8rem;
+    margin-bottom: 18px;
+}
+
+.letter-box p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 12px;
+}
+
+.letter-signature {
+    font-style: italic;
+    margin-top: 25px !important;
+    font-size: 1.2rem !important;
+    color: #f48fb1;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-30px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Zurück-Link */
+.back-link {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+}
+
+.back-link a {
+    display: inline-block;
+    padding: 12px 28px;
+    background: rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
+}
+
+.back-link a:hover {
+    background: rgba(255, 255, 255, 0.25);
+    color: white;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 600px) {
+    #heart-counter {
+        font-size: 2rem;
+    }
+
+    .instruction {
+        font-size: 1rem;
+    }
+
+    #party-text {
+        font-size: 2rem;
+    }
+
+    #system-text {
+        font-size: 1.1rem;
+    }
+
+    #chaos-counter {
+        font-size: 1.5rem;
+    }
+
+    .bsod-sad {
+        font-size: 5rem;
+    }
+
+    .bsod-content h1 {
+        font-size: 1.4rem;
+    }
+
+    .photo-frame {
+        width: 220px;
+        height: 220px;
+    }
+
+    #typewriter-text {
+        font-size: 1.05rem;
+    }
+
+    .letter-box {
+        padding: 25px 20px;
+    }
+
+    .level-label {
+        font-size: 1.1rem;
+    }
+
+    .total-badge {
+        font-size: 1.2rem;
+        padding: 10px 20px;
+    }
+}
