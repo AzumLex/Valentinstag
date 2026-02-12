@@ -1,7 +1,19 @@
-const eventDate = new Date('2024-07-12T00:00:00');
+function getEventDate() {
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  const targetDate = new Date(currentYear, 6, 12); // Monat 0-indexiert: 6 = Juli
+  
+  // Wenn heute nach dem 12.7. ist, nimm nächstes Jahr
+  if (now > targetDate) {
+    targetDate.setFullYear(currentYear + 1);
+  }
+  
+  return targetDate;
+}
 
 function updateCountdown() {
   const now = new Date().getTime();
+  const eventDate = getEventDate();
   const distance = eventDate - now;
 
   const days = Math.floor(distance / (1000 * 60 * 60 * 24));

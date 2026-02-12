@@ -686,35 +686,10 @@ function startLevel5() {
         `Zusammen haben wir ${totalHearts} Herzen gesammelt – ` +
         'und jedes einzelne gehört dir. Happy Valentinstag 2026. ❤️';
 
-    const chars = Array.from(text);
     const element = document.getElementById('typewriter-text');
+    const chars = buildTypewriterChars(element, text);
 
-    // Wörter gruppieren, damit kein Umbruch mitten im Wort passiert
-    const words = text.split(/( )/);
-    let html = '';
-    let charIndex = 0;
-    words.forEach(word => {
-        if (word === ' ') {
-            html += `<span class="tw-char" data-index="${charIndex}">&nbsp;</span>`;
-            charIndex++;
-        } else {
-            const wordChars = Array.from(word);
-            html += '<span class="tw-word">';
-            wordChars.forEach(ch => {
-                html += `<span class="tw-char" data-index="${charIndex}">${ch.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</span>`;
-                charIndex++;
-            });
-            html += '</span>';
-        }
-    });
-    element.innerHTML = html;
-
-    const spans = element.querySelectorAll('.tw-char');
-
-    typeWriterReveal(spans, 0, chars, () => {
-        // Cursor entfernen wenn fertig
-        const cur = element.querySelector('.tw-cursor');
-        if (cur) cur.classList.remove('tw-cursor');
+    typeWriterReveal(chars, 0, () => {
         // Nach dem Typewriter → Liebesbrief / Gutschein einblenden
         setTimeout(() => {
             document.getElementById('love-letter').classList.remove('hidden');
@@ -722,22 +697,59 @@ function startLevel5() {
     });
 }
 
-function typeWriterReveal(spans, index, chars, callback) {
-    if (index < spans.length) {
-        // Cursor vom vorherigen Zeichen entfernen
-        if (index > 0) spans[index - 1].classList.remove('tw-cursor');
-        spans[index].classList.add('visible');
-        spans[index].classList.add('tw-cursor');
-        const ch = chars[index];
-        const delay = ch === '.' || ch === ',' ? 120 : 45;
-        requestAnimationFrame(() => {
-            setTimeout(() => typeWriterReveal(spans, index + 1, chars, callback), delay);
+function buildTypewriterChars(element, text) {
+    element.innerHTML = '';
+    element.classList.add('typing');
+
+    const tokens = text.split(/(\s+)/);
+    const chars = [];
+
+    tokens.forEach(token => {
+        if (token === '') return;
+
+        if (/^\s+$/.test(token)) {
+            const space = document.createElement('span');
+            space.className = 'tw-char tw-space';
+            space.textContent = token;
+            element.appendChild(space);
+            chars.push(space);
+            return;
+        }
+
+        const word = document.createElement('span');
+        word.className = 'tw-word';
+
+        Array.from(token).forEach(ch => {
+            const charSpan = document.createElement('span');
+            charSpan.className = 'tw-char';
+            charSpan.textContent = ch;
+            word.appendChild(charSpan);
+            chars.push(charSpan);
         });
-    } else {
-        // Cursor vom letzten Zeichen entfernen
-        if (spans.length > 0) spans[spans.length - 1].classList.remove('tw-cursor');
-        if (callback) callback();
+
+        element.appendChild(word);
+    });
+
+    return chars;
+}
+
+function typeWriterReveal(chars, index, callback) {
+    if (index < chars.length) {
+        chars[index].classList.add('visible');
+
+        const ch = chars[index].textContent;
+        const delay = ch === '.' || ch === ',' ? 120 : 45;
+
+        requestAnimationFrame(() => {
+            setTimeout(() => typeWriterReveal(chars, index + 1, callback), delay);
+        });
+        return;
     }
+
+    const typewriterText = document.getElementById('typewriter-text');
+    typewriterText.classList.remove('typing');
+
+    if (callback) callback();
 }
 
 // =============================================================

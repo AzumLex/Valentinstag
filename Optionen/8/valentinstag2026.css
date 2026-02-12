@@ -346,6 +346,16 @@ body {
     50%      { opacity: 1; }
 }
 
+/* Level 2 Text heller für besseren Kontrast auf purpurnem Hintergrund */
+#level2 .hud {
+    color: #ffff00;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+}
+
+#level2 #turbo-counter {
+    text-shadow: 0 2px 15px rgba(0, 0, 0, 0.7);
+}
+
 .total-hearts {
     font-size: 0.95rem;
     margin-top: 6px;
@@ -524,33 +534,20 @@ body {
     word-break: break-word;
 }
 
+#typewriter-text .tw-word {
+    white-space: nowrap;
+}
+
+#typewriter-text .tw-space {
+    white-space: pre;
+}
+
 #typewriter-text .tw-char {
-    opacity: 0;
-    transition: opacity 0.05s ease;
+    visibility: hidden;
 }
 
 #typewriter-text .tw-char.visible {
-    opacity: 1;
-}
-
-#typewriter-text .tw-word {
-    white-space: nowrap;
-    display: inline;
-}
-
-#typewriter-text .tw-char.tw-cursor::after {
-    content: '';
-    display: inline-block;
-    width: 2px;
-    height: 1.25em;
-    background: white;
-    vertical-align: text-bottom;
-    animation: cursorBlink 0.7s infinite;
-}
-
-@keyframes cursorBlink {
-    0%, 100% { opacity: 1; }
-    50%      { opacity: 0; }
+    visibility: visible;
 }
 
 /* Liebesbrief / Gutschein */
