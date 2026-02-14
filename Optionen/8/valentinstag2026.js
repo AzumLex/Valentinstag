@@ -696,7 +696,7 @@ function startLevel5() {
         `💕 Herzen gesammelt: ${totalHearts}`;
 
     const text = 'Okay, Spaß beiseite. Du bringst mein Herz zum Rasen ' +
-        '(wie in 3). Ich bin froh, dass es dich gibt. ' +
+        '(wie in Level 2). Ich bin froh, dass es dich gibt. ' +
         `Zusammen haben wir ${totalHearts} Herzen gesammelt – ` +
         'und jedes einzelne gehört dir. Happy Valentinstag 2026. ❤️';
 
