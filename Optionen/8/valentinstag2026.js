@@ -83,6 +83,18 @@ function stopAmbient(immediate = false) {
     ambientOscillators = null;
 }
 
+// Funktion, um die ganze Musik zu beenden (von Level 1 bis 3)
+function stopAllAmbient() {
+    stopAllAmbient();
+
+    if (audioCtx) {
+        const now = audioCtx.currentTime;
+        audioCtx.close().catch(() => {});
+        audioCtx = null;
+    }
+}
+
+
 // --- Hava Nagila Melodie (vereinfacht, Web Audio) ---
 function playHavaNagila() {
     initAudio();
