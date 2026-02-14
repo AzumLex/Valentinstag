@@ -35,6 +35,28 @@ function playPling() {
 // --- Sanfte Ambient-Akkorde für Level 1 ---
 let ambientOscillators = null;
 
+function stopOscillatorGroup(group, immediate = false) {
+    if (!group || !audioCtx) return;
+
+    const now = audioCtx.currentTime;
+    group.forEach(({ osc, gain }) => {
+        try {
+            gain.gain.cancelScheduledValues(now);
+            gain.gain.setValueAtTime(gain.gain.value, now);
+
+            if (immediate) {
+                gain.gain.setValueAtTime(0, now);
+                osc.stop(now + 0.02);
+            } else {
+                gain.gain.linearRampToValueAtTime(0.001, now + 0.8);
+                osc.stop(now + 1);
+            }
+        } catch (_) {
+            // Ignorieren, falls Oszillator bereits gestoppt wurde
+        }
+    });
+}
+
 function playAmbient() {
     initAudio();
     // Sanfter C-Dur Akkord als Hintergrund
@@ -55,14 +77,10 @@ function playAmbient() {
     });
 }
 
-function stopAmbient() {
-    if (ambientOscillators) {
-        ambientOscillators.forEach(({ osc, gain }) => {
-            gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + 0.8);
-            osc.stop(audioCtx.currentTime + 1);
-        });
-        ambientOscillators = null;
-    }
+function stopAmbient(immediate = false) {
+    if (!ambientOscillators) return;
+    stopOscillatorGroup(ambientOscillators, immediate);
+    ambientOscillators = null;
 }
 
 // --- Hava Nagila Melodie (vereinfacht, Web Audio) ---
@@ -574,14 +592,10 @@ function playAmbientGold() {
     });
 }
 
-function stopAmbientGold() {
-    if (ambientGoldOsc) {
-        ambientGoldOsc.forEach(({ osc, gain }) => {
-            gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + 0.8);
-            osc.stop(audioCtx.currentTime + 1);
-        });
-        ambientGoldOsc = null;
-    }
+function stopAmbientGold(immediate = false) {
+    if (!ambientGoldOsc) return;
+    stopOscillatorGroup(ambientGoldOsc, immediate);
+    ambientGoldOsc = null;
 }
 
 // --- Gold-Pling (höher für Gold) ---
@@ -614,8 +628,8 @@ function playPlingGold(isGolden) {
 function transitionToLevel4() {
     level3Active = false;
     clearInterval(goldSpawnInterval);
-    stopAmbientGold();
-    stopAmbient();
+    stopAmbientGold(true);
+    stopAmbient(true);
 
     const fade = document.getElementById('white-fade');
     fade.classList.add('active');
